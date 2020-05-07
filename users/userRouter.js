@@ -1,18 +1,15 @@
 const router = require("express").Router();
+const restricted = require("../auth/restrictedmiddleware");
 
 const Users = require("./userModel");
 
-router.get("/", (req,res) => {
-    if (req.session && req.session.user) {
+router.get("/", restricted, (req,res) => {
     Users.find()
     .then(users => {
         res.json(users);
     })
     .catch(err =>
         res.send(err));
-    } else {
-        res.status(401).json({message: 'Not loggen in'})
-    }
 });
 
 module.exports = router;
