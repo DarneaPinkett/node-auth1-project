@@ -34,6 +34,16 @@ router.post('/login', (req, res) => {
     .catch(err => {
         res.status(500).json({error: 'You shall not pass!'})
     })
-})
+});
+
+router.get('/logout', (req, res) => {
+    req.session.destroy((err) => {
+        if (err) {
+            res.send("Your stuck");
+        } else {
+            res.send("logged out");
+        }
+    })
+});
 
 module.exports = router;
